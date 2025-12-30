@@ -6,14 +6,14 @@
 
 ## Tasks
 
-- [ ] 1. 项目初始化与基础设施
-  - [ ] 1.1 创建项目目录结构
+- [x] 1. 项目初始化与基础设施
+  - [x] 1.1 创建项目目录结构
     - 创建 `nginx/lua/ratelimit/` 目录
     - 创建 `nginx/conf/` 配置目录
     - 创建 `nginx/tests/` 测试目录
     - _Requirements: 8.1, 8.3_
 
-  - [ ] 1.2 配置 OpenResty 基础环境
+  - [x] 1.2 配置 OpenResty 基础环境
     - 配置 `lua_shared_dict ratelimit_dict 100m`
     - 配置 `lua_shared_dict connlimit_dict 10m`
     - 配置 `lua_shared_dict config_dict 5m`
@@ -26,8 +26,8 @@
     - 创建测试辅助函数
     - _Requirements: Testing Strategy_
 
-- [ ] 2. Cost Calculator 实现
-  - [ ] 2.1 实现 Cost 计算核心模块
+- [x] 2. Cost Calculator 实现
+  - [x] 2.1 实现 Cost 计算核心模块
     - 创建 `ratelimit/cost.lua`
     - 实现 `calculate(method, body_size, c_bw)` 函数
     - 实现 HTTP 方法到 C_base 的映射
@@ -40,30 +40,30 @@
     - 验证结果不超过 1,000,000
     - **Validates: Requirements 1.1, 1.7**
 
-- [ ] 3. Checkpoint - Cost Calculator 验证
+- [x] 3. Checkpoint - Cost Calculator 验证
   - 确保所有 Cost Calculator 测试通过
   - 验证各 HTTP 方法的 C_base 值正确
 
-- [ ] 4. L3 本地令牌桶实现
-  - [ ] 4.1 实现 L3 Bucket 核心模块
+- [x] 4. L3 本地令牌桶实现
+  - [x] 4.1 实现 L3 Bucket 核心模块
     - 创建 `ratelimit/l3_bucket.lua`
     - 实现 `acquire(app_id, cost)` 函数
     - 实现本地令牌扣减逻辑
     - 实现 pending_consumption 计数器
     - _Requirements: 2.1, 2.2, 2.3, 2.7_
 
-  - [ ] 4.2 实现异步补充机制
+  - [x] 4.2 实现异步补充机制
     - 实现 `async_refill(app_id)` 函数
     - 实现 20% 阈值触发逻辑
     - 实现批量同步 (100ms / 1000 requests)
     - _Requirements: 2.4, 2.5_
 
-  - [ ] 4.3 实现 Fail-Open 模式
+  - [x] 4.3 实现 Fail-Open 模式
     - 实现 `handle_fail_open(app_id, cost)` 函数
     - 限制 Fail-Open 令牌数为 100
     - _Requirements: 2.6, 11.3, 11.4_
 
-  - [ ] 4.4 实现令牌回滚功能
+  - [x] 4.4 实现令牌回滚功能
     - 实现 `rollback(app_id, cost)` 函数
     - 实现回滚计数器
     - _Requirements: 13.1, 13.2, 13.3, 13.4, 13.5_
@@ -74,38 +74,38 @@
     - **Property 12: Refill Threshold Trigger**
     - **Validates: Requirements 2.3, 2.4, 2.7, 15.4**
 
-- [ ] 5. Checkpoint - L3 Bucket 验证
+- [x] 5. Checkpoint - L3 Bucket 验证
   - 确保所有 L3 Bucket 测试通过
   - 验证本地令牌扣减和回滚正确
 
-- [ ] 6. Redis 客户端实现
-  - [ ] 6.1 实现 Redis 连接池
+- [x] 6. Redis 客户端实现
+  - [x] 6.1 实现 Redis 连接池
     - 创建 `ratelimit/redis.lua`
     - 实现连接池管理 (pool_size = 50)
     - 实现 keepalive 配置 (idle_timeout = 60000ms)
     - 实现连接超时 (timeout = 1000ms)
     - _Requirements: 12.1, 12.2, 12.3, 12.4_
 
-  - [ ] 6.2 实现 Lua 脚本预加载
+  - [x] 6.2 实现 Lua 脚本预加载
     - 预加载 ACQUIRE_SCRIPT
     - 预加载 BORROW_SCRIPT
     - 实现脚本缓存机制
     - _Requirements: 12.5_
 
-  - [ ] 6.3 实现连接失败重试逻辑
+  - [x] 6.3 实现连接失败重试逻辑
     - 实现指数退避重试
     - 实现 Redis Cluster 支持
     - _Requirements: 12.6, 12.7_
 
-- [ ] 7. L2 应用层令牌桶实现
-  - [ ] 7.1 实现 L2 Bucket 核心模块
+- [x] 7. L2 应用层令牌桶实现
+  - [x] 7.1 实现 L2 Bucket 核心模块
     - 创建 `ratelimit/l2_bucket.lua`
     - 实现 Redis Lua 脚本 ACQUIRE_SCRIPT
     - 实现令牌补充逻辑 (基于 elapsed time × refill_rate)
     - 实现 burst_quota 上限检查
     - _Requirements: 3.1, 3.2, 3.3, 3.4, 3.5, 3.7_
 
-  - [ ] 7.2 实现批量获取功能
+  - [x] 7.2 实现批量获取功能
     - 实现 `acquire_batch(app_id, amount)` 函数
     - 供 L3 预取使用
     - _Requirements: 3.7_
@@ -115,42 +115,42 @@
     - **Property 4: Burst Quota Invariant**
     - **Validates: Requirements 3.4, 3.5**
 
-- [ ] 8. Checkpoint - L2 Bucket 验证
+- [x] 8. Checkpoint - L2 Bucket 验证
   - 确保所有 L2 Bucket 测试通过
   - 验证 Redis Lua 脚本原子性
 
-- [ ] 9. L1 集群层实现
-  - [ ] 9.1 实现 L1 Cluster 核心模块
+- [x] 9. L1 集群层实现
+  - [x] 9.1 实现 L1 Cluster 核心模块
     - 创建 `ratelimit/l1_cluster.lua`
     - 实现全局配额管理
     - 实现 10% 预留容量
     - 实现 90% 使用率触发配额削减
     - _Requirements: 4.1, 4.2, 4.3, 4.4_
 
-  - [ ] 9.2 实现紧急模式支持
+  - [x] 9.2 实现紧急模式支持
     - 实现 emergency_mode 激活
     - 实现 P0 优先级 100% 配额
     - _Requirements: 4.5, 4.6_
 
-  - [ ] 9.3 实现全局对账
+  - [x] 9.3 实现全局对账
     - 实现 60 秒周期对账
     - 实现 cluster_exhausted 错误返回
     - _Requirements: 4.7, 4.8_
 
-- [ ] 10. 借用管理器实现
-  - [ ] 10.1 实现 Borrow Manager 核心模块
+- [x] 10. 借用管理器实现
+  - [x] 10.1 实现 Borrow Manager 核心模块
     - 创建 `ratelimit/borrow.lua`
     - 实现 Redis Lua 脚本 BORROW_SCRIPT
     - 实现 20% 利息计算
     - 实现 max_borrow 限制
     - _Requirements: 5.1, 5.2, 5.3, 5.4_
 
-  - [ ] 10.2 实现还款逻辑
+  - [x] 10.2 实现还款逻辑
     - 实现债务优先还款
     - 实现借用/还款历史记录
     - _Requirements: 5.5, 5.6_
 
-  - [ ] 10.3 实现集群可用量检查
+  - [x] 10.3 实现集群可用量检查
     - 实现 reserved_ratio 检查
     - 拒绝低于预留比例的借用
     - _Requirements: 5.7_
@@ -160,23 +160,23 @@
     - **Property 13: Repayment Order**
     - **Validates: Requirements 5.2, 5.3, 5.5, 5.7**
 
-- [ ] 11. Checkpoint - 借用机制验证
+- [x] 11. Checkpoint - 借用机制验证
   - 确保所有借用相关测试通过
   - 验证利息计算和还款顺序
 
-- [ ] 12. 紧急模式管理器实现
-  - [ ] 12.1 实现 Emergency Manager 核心模块
+- [x] 12. 紧急模式管理器实现
+  - [x] 12.1 实现 Emergency Manager 核心模块
     - 创建 `ratelimit/emergency.lua`
     - 实现手动激活 API
     - 实现自动激活 (usage > 95%)
     - _Requirements: 6.1, 6.2_
 
-  - [ ] 12.2 实现优先级配额分配
+  - [x] 12.2 实现优先级配额分配
     - 实现 P0=100%, P1=50%, P2=10%, P3+=0%
     - 实现 `check_emergency_request(app_id, cost)` 函数
     - _Requirements: 6.3, 6.4_
 
-  - [ ] 12.3 实现紧急模式生命周期
+  - [x] 12.3 实现紧急模式生命周期
     - 实现自动过期 (default 300s)
     - 实现 Redis Pub/Sub 事件发布
     - 实现日志记录
@@ -186,19 +186,19 @@
     - **Property 6: Emergency Mode Quota Ratios**
     - **Validates: Requirements 4.6, 6.3, 6.4**
 
-- [ ] 13. 对账器实现
-  - [ ] 13.1 实现 Reconciler 核心模块
+- [x] 13. 对账器实现
+  - [x] 13.1 实现 Reconciler 核心模块
     - 创建 `ratelimit/reconciler.lua`
     - 实现 60 秒周期检查
     - 实现 10% 漂移容忍度
     - _Requirements: 7.1, 7.2_
 
-  - [ ] 13.2 实现全局对账
+  - [x] 13.2 实现全局对账
     - 实现 L1 = sum(L2) 验证
     - 实现周期消耗计数器重置
     - _Requirements: 7.3, 7.4_
 
-  - [ ] 13.3 实现修正记录
+  - [x] 13.3 实现修正记录
     - 实现 correction_count 计数器
     - 实现节点故障处理
     - _Requirements: 7.5, 7.6_
@@ -208,46 +208,46 @@
     - **Property 14: Drift Tolerance Correction**
     - **Validates: Requirements 7.2, 7.3, 15.5, 15.6**
 
-- [ ] 14. Checkpoint - 核心限流功能验证
+- [x] 14. Checkpoint - 核心限流功能验证
   - 确保 L1/L2/L3 三层协同工作
   - 验证紧急模式和对账功能
 
-- [ ] 15. 连接限制器实现
-  - [ ] 15.1 实现 Connection Limiter 核心模块
+- [x] 15. 连接限制器实现
+  - [x] 15.1 实现 Connection Limiter 核心模块
     - 创建 `ratelimit/connection_limiter.lua`
     - 实现 `init()` 初始化函数
     - 实现输入验证函数 `validate_input(app_id, cluster_id)`
     - 实现 `get_or_init_data(key, default_limit)` 函数
     - _Requirements: 17.1, 17.2_
 
-  - [ ] 15.2 实现原子计数操作
+  - [x] 15.2 实现原子计数操作
     - 实现 `atomic_increment(key, default_limit)` 函数（CAS 模式）
     - 实现 `atomic_decrement(key)` 函数
     - 实现重试逻辑 (RETRY_MAX = 3)
     - 确保多 Worker 环境下的原子性
     - _Requirements: 17.6, 15.2_
 
-  - [ ] 15.3 实现连接获取功能
+  - [x] 15.3 实现连接获取功能
     - 实现 `acquire(app_id, cluster_id)` 函数
     - 实现 per-app 和 per-cluster 两级限制检查
     - 实现 Cluster 检查失败时的 App 计数回滚
     - 实现 `generate_conn_id()` 唯一 ID 生成（微秒精度 + 随机数）
     - _Requirements: 17.3, 17.4, 17.5_
 
-  - [ ] 15.4 实现连接释放
+  - [x] 15.4 实现连接释放
     - 实现 `release()` 函数
     - 在 log_by_lua 阶段调用
     - 实现幂等性检查（防止重复释放）
     - 实现 `set_response_headers()` 响应头设置
     - _Requirements: 17.7, 17.8_
 
-  - [ ] 15.5 实现连接追踪
+  - [x] 15.5 实现连接追踪
     - 实现连接追踪表记录
     - 记录 connection_id, app_id, cluster_id, created_at, last_seen, client_ip
     - 实现 `heartbeat()` 函数更新 last_seen（用于长连接）
     - _Requirements: 18.1, 18.2, 18.3_
 
-  - [ ] 15.6 实现泄漏检测与清理
+  - [x] 15.6 实现泄漏检测与清理
     - 实现 `cleanup_leaked_connections()` 函数
     - 限制每次扫描键数量 (MAX_CLEANUP_KEYS = 1000)
     - 实现 30 秒周期清理定时器
@@ -256,13 +256,13 @@
     - 实现详细泄漏日志记录
     - _Requirements: 18.4, 18.5, 18.6, 18.7_
 
-  - [ ] 15.7 实现降级策略
+  - [x] 15.7 实现降级策略
     - 实现连接限制器降级级别定义
     - 实现 normal/mild/significant/fail_open 四级降级
     - 实现降级时的清理频率调整
     - _Requirements: 11.1, 11.2, 11.3_
 
-  - [ ] 15.8 实现拒绝事件记录
+  - [x] 15.8 实现拒绝事件记录
     - 实现 `record_rejection()` 函数
     - 记录拒绝原因、app_id、cluster_id、client_ip
     - _Requirements: 17.4, 17.5_
@@ -276,23 +276,23 @@
     - **Property 20: Connection Release Idempotency**
     - **Validates: Requirements 17, 18**
 
-- [ ] 16. Checkpoint - 连接限制器验证
+- [x] 16. Checkpoint - 连接限制器验证
   - 确保连接限制器测试通过
   - 验证泄漏检测和清理功能
 
-- [ ] 17. 预留管理器实现
-  - [ ] 17.1 实现 Reservation Manager 核心模块
+- [x] 17. 预留管理器实现
+  - [x] 17.1 实现 Reservation Manager 核心模块
     - 创建 `ratelimit/reservation.lua`
     - 实现 `create(app_id, estimated_cost)` 函数
     - 实现预留 ID 生成和追踪
     - _Requirements: 14.1, 14.2_
 
-  - [ ] 17.2 实现预留完成与对账
+  - [x] 17.2 实现预留完成与对账
     - 实现 `complete(reservation_id, actual_cost)` 函数
     - 实现差额退还/补扣逻辑
     - _Requirements: 14.3, 14.4, 14.5_
 
-  - [ ] 17.3 实现预留超时处理
+  - [x] 17.3 实现预留超时处理
     - 实现自动释放 (default 3600s)
     - 实现预留指标暴露
     - _Requirements: 14.6, 14.7_
@@ -302,20 +302,20 @@
     - **Property 9: Reservation Round-Trip**
     - **Validates: Requirements 13.1, 14.3, 14.4, 14.5**
 
-- [ ] 18. 配置验证器实现
-  - [ ] 18.1 实现 Config Validator 核心模块
+- [x] 18. 配置验证器实现
+  - [x] 18.1 实现 Config Validator 核心模块
     - 创建 `ratelimit/config_validator.lua`
     - 实现 `validate_app_config(config)` 函数
     - 实现 `validate_cluster_capacity(capacity, quotas)` 函数
     - _Requirements: 16.1, 16.2, 16.3, 16.4_
 
-  - [ ] 18.2 实现验证规则
+  - [x] 18.2 实现验证规则
     - 验证 sum(guaranteed_quotas) <= cluster_capacity × 0.9
     - 验证 burst_quota >= guaranteed_quota
     - 验证 priority 范围 [0, 3]
     - _Requirements: 16.2, 16.3, 16.4_
 
-  - [ ] 18.3 实现 dry-run 模式
+  - [x] 18.3 实现 dry-run 模式
     - 实现配置预检查
     - 实现详细错误消息返回
     - 实现验证日志记录
@@ -325,77 +325,77 @@
     - **Property 11: Config Validation Correctness**
     - **Validates: Requirements 16.2, 16.3, 16.4**
 
-- [ ] 19. Checkpoint - 高级功能验证
+- [x] 19. Checkpoint - 高级功能验证
   - 确保预留管理和配置验证测试通过
   - 验证端到端配置更新流程
 
-- [ ] 20. Nginx 集成实现
-  - [ ] 20.1 实现主入口模块
+- [x] 20. Nginx 集成实现
+  - [x] 20.1 实现主入口模块
     - 创建 `ratelimit/init.lua`
     - 实现 `init()` 初始化函数
     - 实现 `check(app_id, user_id, cluster_id)` 函数
     - 实现 `log()` 日志阶段处理
     - _Requirements: 8.1, 8.2, 8.4_
 
-  - [ ] 20.2 实现响应头设置
+  - [x] 20.2 实现响应头设置
     - 设置 X-RateLimit-Cost
     - 设置 X-RateLimit-Remaining
     - 设置 X-Connection-Limit
     - 设置 X-Connection-Current
     - _Requirements: 8.5, 17.8_
 
-  - [ ] 20.3 实现限流拒绝响应
+  - [x] 20.3 实现限流拒绝响应
     - 返回 HTTP 429
     - 设置 Retry-After 头
     - 返回 JSON 错误详情
     - _Requirements: 8.6_
 
-  - [ ] 20.4 实现健康检查端点
+  - [x] 20.4 实现健康检查端点
     - 实现 /health 端点 (跳过限流)
     - _Requirements: 8.7_
 
-- [ ] 21. 降级管理器实现
-  - [ ] 21.1 实现 Degradation Manager 核心模块
+- [x] 21. 降级管理器实现
+  - [x] 21.1 实现 Degradation Manager 核心模块
     - 创建 `ratelimit/degradation.lua`
     - 实现降级级别定义 (normal, mild, significant, fail_open)
     - 实现 Redis 延迟检测
     - _Requirements: 11.1, 11.2, 11.3_
 
-  - [ ] 21.2 实现降级策略
+  - [x] 21.2 实现降级策略
     - 10-100ms 延迟: 增加 L3 缓存
     - >100ms 延迟: 切换 reserved 模式
     - 不可用: 激活 Fail-Open
     - _Requirements: 11.1, 11.2, 11.3, 11.4_
 
-  - [ ] 21.3 实现自动恢复
+  - [x] 21.3 实现自动恢复
     - 实现 Redis 可用性检测
     - 实现自动恢复逻辑
     - 实现降级日志和指标
     - _Requirements: 11.5, 11.6, 11.7_
 
-- [ ] 22. 监控指标实现
-  - [ ] 22.1 实现 Metrics Collector 核心模块
+- [x] 22. 监控指标实现
+  - [x] 22.1 实现 Metrics Collector 核心模块
     - 创建 `ratelimit/metrics.lua`
     - 实现 Prometheus 兼容格式
     - _Requirements: 9.1_
 
-  - [ ] 22.2 实现请求指标
+  - [x] 22.2 实现请求指标
     - 实现 requests_total (by app_id, method, status)
     - 实现 request_cost histogram
     - _Requirements: 9.2, 9.3_
 
-  - [ ] 22.3 实现令牌指标
+  - [x] 22.3 实现令牌指标
     - 实现 l1/l2/l3 token availability gauges
     - 实现 cache_hit_ratio
     - _Requirements: 9.4, 9.6_
 
-  - [ ] 22.4 实现系统指标
+  - [x] 22.4 实现系统指标
     - 实现 redis_latency histogram
     - 实现 emergency_mode status
     - 实现 reconcile_corrections counter
     - _Requirements: 9.5, 9.7, 9.8_
 
-  - [ ] 22.5 实现连接限制指标
+  - [x] 22.5 实现连接限制指标
     - 实现 connlimit_active_connections gauge
     - 实现 connlimit_peak_connections gauge
     - 实现 connlimit_rejected_total counter
@@ -403,34 +403,34 @@
     - 实现 connlimit_duration_seconds histogram
     - _Requirements: 19.1, 19.2, 19.3, 19.4, 19.5_
 
-  - [ ] 22.6 实现指标端点
+  - [x] 22.6 实现指标端点
     - 实现 /metrics Prometheus 端点
     - 实现 Redis 统计上报 (10s 周期)
     - _Requirements: 8.8, 19.6, 19.7_
 
-- [ ] 23. 配置管理 API 实现
-  - [ ] 23.1 实现 Config API 核心模块
+- [x] 23. 配置管理 API 实现
+  - [x] 23.1 实现 Config API 核心模块
     - 创建 `ratelimit/config_api.lua`
     - 实现应用配额 CRUD
     - 实现集群容量配置
     - _Requirements: 10.1, 10.2_
 
-  - [ ] 23.2 实现紧急模式控制
+  - [x] 23.2 实现紧急模式控制
     - 实现紧急模式激活/停用 API
     - 实现实时指标查询
     - _Requirements: 10.3, 10.4_
 
-  - [ ] 23.3 实现配置验证与发布
+  - [x] 23.3 实现配置验证与发布
     - 集成 Config Validator
     - 实现 Redis Pub/Sub 配置发布
     - _Requirements: 10.5, 10.6_
 
-  - [ ] 23.4 实现安全与审计
+  - [x] 23.4 实现安全与审计
     - 实现 API 认证
     - 实现配置变更日志
     - _Requirements: 10.7, 10.8_
 
-  - [ ] 23.5 实现连接限制配置 API
+  - [x] 23.5 实现连接限制配置 API
     - 实现应用连接限制 CRUD
     - 实现集群连接限制配置
     - 实现配置缓存 (60s TTL)
