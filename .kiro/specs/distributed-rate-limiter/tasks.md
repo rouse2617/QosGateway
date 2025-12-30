@@ -436,12 +436,12 @@
     - 实现配置缓存 (60s TTL)
     - _Requirements: 20.1, 20.2, 20.3, 20.4, 20.5, 20.6, 20.7_
 
-- [ ] 24. Checkpoint - 完整系统验证
+- [x] 24. Checkpoint - 完整系统验证
   - 确保所有模块集成正确
   - 验证监控指标和配置 API
 
-- [ ] 25. Nginx 配置文件
-  - [ ] 25.1 创建生产环境 nginx.conf
+- [x] 25. Nginx 配置文件
+  - [x] 25.1 创建生产环境 nginx.conf
     - 配置 worker_processes
     - 配置 shared_dict
     - 配置 lua_package_path
@@ -449,7 +449,7 @@
     - 配置 init_worker_by_lua_block
     - _Requirements: 8.3, 8.4_
 
-  - [ ] 25.2 配置 API 路由
+  - [x] 25.2 配置 API 路由
     - 配置 access_by_lua_block
     - 配置 log_by_lua_block
     - 配置 /health 端点
